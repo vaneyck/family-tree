@@ -8,21 +8,33 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import store from "@/store";
+import FamilyTree from "@balkangraph/familytree.js";
 
 @Options({
   components: {},
   mounted() {
-    // TODO draw tree for the first time
+    this.renderTree();
   },
   computed: {
     treeData: function () {
       return store.getters.getTreeData;
     },
   },
+  methods: {
+    renderTree: function () {
+      new FamilyTree("#tree", {
+        nodeBinding: {
+          field_0: "name",
+        },
+        nodes: this.treeData,
+      });
+    },
+  },
   watch: {
     treeData: function (newTreeData) {
       // TODO redraw tree since new information is received
       console.log(newTreeData);
+      this.renderTree();
     },
   },
 })

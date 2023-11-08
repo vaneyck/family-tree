@@ -2,6 +2,7 @@
   <div>
     <h1>Tree Editor</h1>
     <AddPerson />
+    <hr />
     <AddRelationship />
     <hr />
     <ol>

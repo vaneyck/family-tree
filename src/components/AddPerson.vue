@@ -4,6 +4,14 @@
     <input class="input" type="text" v-model="personName" />
     <br />
     <br />
+    <div class="select">
+      <select v-model="gender">
+        <option>male</option>
+        <option>female</option>
+      </select>
+    </div>
+    <br />
+    <br />
     <button @click="addPerson" class="button">Add Person</button>
   </div>
 </template>
@@ -18,6 +26,7 @@ import { v4 as uuidv4 } from "uuid";
   data() {
     return {
       personName: "",
+      gender: "male",
     };
   },
   methods: {
@@ -25,6 +34,7 @@ import { v4 as uuidv4 } from "uuid";
       store.dispatch("addPerson", {
         person_uuid: uuidv4(),
         names: this.personName,
+        gender: this.gender,
       } as Person);
       this.personName = "";
     },
