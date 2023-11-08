@@ -1,18 +1,17 @@
 <template>
-  <FamilyTreeContainer></FamilyTreeContainer>
+  <div>
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import FamilyTreeContainer from "@/components/FamilyTreeContainer.vue";
 
 // Import Bulma CSS
 import "bulma/css/bulma.css";
 
 @Options({
-  components: {
-    FamilyTreeContainer,
-  },
+  components: {},
 })
 export default class App extends Vue {}
 </script>
