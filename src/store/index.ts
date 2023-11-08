@@ -71,13 +71,17 @@ export default createStore({
   },
   mutations: {
     addPerson(state, personToAdd: Person) {
-      const foundPerson = state.persons.find((p) => {
+      const foundPersonIndex = state.persons.findIndex((p) => {
         return p.person_uuid === personToAdd.person_uuid;
       });
-      if (!foundPerson && personToAdd) {
+      if (foundPersonIndex === -1 && personToAdd) {
+        console.log("Adding New Person");
         state.persons.push(personToAdd);
       }
-
+      if (foundPersonIndex >= 0 && personToAdd) {
+        console.log("Updating Existing Person");
+        state.persons[foundPersonIndex] = personToAdd;
+      }
       // Update Tree Data
       state.treeData = prepareTreeData(state.persons, state.relationships);
     },
@@ -87,12 +91,21 @@ export default createStore({
         state.relationships.push(relationshipToAdd);
         return;
       }
+
+      // TODO handle case when subject or object is missing
+
+      // subject and object cant be same person
+      if (relationshipToAdd.subject_uuid === relationshipToAdd.object_uuid) {
+        alert("Ensure 2 different people are in the relationship");
+        return;
+      }
       const foundRelationship = state.relationships.find((relationship) => {
         return (
           relationship.subject_uuid === relationshipToAdd.subject_uuid &&
           relationship.object_uuid === relationshipToAdd.object_uuid
         );
       });
+      // Add new relationship
       if (!foundRelationship && relationshipToAdd) {
         state.relationships.push(relationshipToAdd);
       }

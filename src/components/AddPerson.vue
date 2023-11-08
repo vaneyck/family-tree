@@ -51,6 +51,10 @@ import { Person } from "@/types/Person";
 import { v4 as uuidv4 } from "uuid";
 
 @Options({
+  props: {
+    editing: Boolean,
+    editingUuid: String,
+  },
   data() {
     return {
       personName: "",
@@ -63,14 +67,17 @@ import { v4 as uuidv4 } from "uuid";
   methods: {
     addPerson: function () {
       store.dispatch("addPerson", {
-        person_uuid: uuidv4(),
+        person_uuid: this.editing ? this.editingUuid : uuidv4(),
         names: this.personName,
         gender: this.gender,
         yearOfBirth: this.yearOfBirth,
         yearOfDeath: this.yearOfDeath,
         headShotImage: this.headShotImage,
       } as Person);
+
       this.personName = "";
+      this.yearOfBirth = null;
+      this.yearOfDeath = null;
     },
   },
 })
