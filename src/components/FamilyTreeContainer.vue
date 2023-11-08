@@ -47,7 +47,6 @@ import { Relationship } from "@/types/Relationship";
             persons.push(map);
           });
           store.state.persons = persons;
-          store.dispatch("rebuildTreeData");
         });
       }
     } catch (error) {

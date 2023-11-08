@@ -27,7 +27,16 @@ import FamilyTree from "@balkangraph/familytree.js";
           svg: { text: "Export SVG" },
           csv: { text: "Export CSV" },
         },
-        enableTouch: true,
+        // enableTouch: true,
+        zoom: {speed: 130, smooth: 50},
+        orientation: FamilyTree.orientation.left,
+        toolbar: {
+          fullScreen: true,
+          zoom: true,
+          fit: true,
+          expandAll: true,
+        },
+        align: FamilyTree.align.orientation,
         dottedLines: [
           {from: 6, to: 1 }
         ],

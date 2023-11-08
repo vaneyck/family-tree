@@ -4,7 +4,6 @@ import { Relationship, RelationshipType } from "@/types/Relationship";
 import { FamilyTreeNode } from "@/types/FamilyTreeNode";
 import {
   collection,
-  addDoc,
   getFirestore,
   setDoc,
   doc,
