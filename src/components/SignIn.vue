@@ -12,7 +12,7 @@ import firebaseui from "firebaseui";
 @Options({
   mounted() {
     console.log("Mounted SignIn Page");
-    var uiConfig = {
+    const uiConfig = {
       signInSuccessUrl: "/",
       signInOptions: ["password"],
       tosUrl: "/terms-of-service",

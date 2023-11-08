@@ -30,7 +30,6 @@ const getUser = function () {
  */
 router.beforeEach(async function (to, from, next) {
   if (to.name === "signin") {
-    console.log("ROUTER: going to signin");
     next();
     return;
   }

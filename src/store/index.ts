@@ -2,6 +2,15 @@ import { createStore } from "vuex";
 import { Person } from "@/types/Person";
 import { Relationship, RelationshipType } from "@/types/Relationship";
 import { FamilyTreeNode } from "@/types/FamilyTreeNode";
+import {
+  collection,
+  addDoc,
+  getFirestore,
+  setDoc,
+  doc,
+} from "firebase/firestore";
+import { firebaseAuth } from "@/firebase";
+import { getPersonPath, getRelationsPath } from "@/utils/helpers";
 
 const prepareTreeData = function (
   persons: Person[],
@@ -70,22 +79,59 @@ export default createStore({
     },
   },
   mutations: {
-    addPerson(state, personToAdd: Person) {
+    async addPerson(state, personToAdd: Person) {
+      const addToDatabase = async function (personToAdd: Person) {
+        // Sync to firebase
+        try {
+          const currentUser = firebaseAuth.currentUser;
+          if (currentUser) {
+            const personsRef = collection(
+              getFirestore(),
+              getPersonPath(currentUser.uid),
+            );
+            await setDoc(doc(personsRef, personToAdd.person_uuid), personToAdd);
+            // state.persons.push(personToAdd);
+          }
+        } catch (e) {
+          console.error("Error adding document: ", e);
+          alert("Could not get user");
+        }
+      };
+
       const foundPersonIndex = state.persons.findIndex((p) => {
         return p.person_uuid === personToAdd.person_uuid;
       });
       if (foundPersonIndex === -1 && personToAdd) {
         console.log("Adding New Person");
-        state.persons.push(personToAdd);
+        await addToDatabase(personToAdd);
       }
       if (foundPersonIndex >= 0 && personToAdd) {
         console.log("Updating Existing Person");
         state.persons[foundPersonIndex] = personToAdd;
+        await addToDatabase(personToAdd);
       }
-      // Update Tree Data
-      state.treeData = prepareTreeData(state.persons, state.relationships);
     },
-    addRelationship(state, relationshipToAdd: Relationship) {
+    async addRelationship(state, relationshipToAdd: Relationship) {
+      const addToDatabase = async function (relationshipToAdd: Relationship) {
+        try {
+          const currentUser = firebaseAuth.currentUser;
+          if (currentUser) {
+            const relationsRef = collection(
+              getFirestore(),
+              getRelationsPath(currentUser.uid),
+            );
+            await setDoc(
+              doc(relationsRef, relationshipToAdd.relationship_uuid),
+              relationshipToAdd,
+            );
+            // state.relationships.push(relationshipToAdd);
+          }
+        } catch (error) {
+          console.error("Error adding document: ", error);
+          alert("Could not get user");
+        }
+      };
+
       // TODO make this better
       if (state.relationships.length == 0) {
         state.relationships.push(relationshipToAdd);
@@ -107,9 +153,10 @@ export default createStore({
       });
       // Add new relationship
       if (!foundRelationship && relationshipToAdd) {
-        state.relationships.push(relationshipToAdd);
+        await addToDatabase(relationshipToAdd);
       }
-
+    },
+    rebuildTreeData(state) {
       // Update Tree Data
       state.treeData = prepareTreeData(state.persons, state.relationships);
     },
@@ -120,6 +167,9 @@ export default createStore({
     },
     addRelationship(context, relationshipToAdd: Relationship) {
       context.commit("addRelationship", relationshipToAdd);
+    },
+    rebuildTreeData(context) {
+      context.commit("rebuildTreeData");
     },
   },
   modules: {},
