@@ -23,6 +23,14 @@ import FamilyTree from "@balkangraph/familytree.js";
   methods: {
     renderTree: function () {
       new FamilyTree("#tree", {
+        menu:{
+          svg: { text: "Export SVG" },
+          csv: { text: "Export CSV" },
+        },
+        enableTouch: true,
+        dottedLines: [
+          {from: 6, to: 1 }
+        ],
         nodeBinding: {
           field_0: "name",
           field_1: "yearsRange",
