@@ -1,7 +1,13 @@
 <template>
   <div>
-    <Tree></Tree>
-    <TreeEditor></TreeEditor>
+    <div class="columns">
+      <div class="column">
+        <Tree></Tree>
+      </div>
+      <div class="column is-one-third">
+        <TreeEditor></TreeEditor>
+      </div>
+    </div>
   </div>
 </template>
 
