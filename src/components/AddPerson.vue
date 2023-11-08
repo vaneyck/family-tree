@@ -41,7 +41,7 @@
     <div class="field">
       <label class="label">Link To Image</label>
       <div class="control">
-        <input class="input" type="file" @change="fileSelected" ref="myFile" />
+        <input class="input" type="file" name="myImage" accept="image/*" @change="fileSelected" ref="myFile" />
       </div>
     </div>
 
@@ -84,7 +84,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
       this.uploadingImage = true;
       uploadBytes(storageRef, file).then((snapshot) => {
         this.uploadingImage = false;
-        console.log('Uploaded a blob or file!');
+        console.log('Uploaded a blob or file!', snapshot);
 
         getDownloadURL(storageRef).then((url : string) => {
           this.headShotImage = url;
