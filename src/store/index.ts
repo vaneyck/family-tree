@@ -97,6 +97,11 @@ export default createStore({
         }
       };
 
+      if (personToAdd.names.trim().length == 0) {
+        alert("Please enter a name");
+        return;
+      }
+
       const foundPersonIndex = state.persons.findIndex((p) => {
         return p.person_uuid === personToAdd.person_uuid;
       });
