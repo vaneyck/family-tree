@@ -7,7 +7,7 @@ import { Options, Vue } from "vue-class-component";
 import FamilyTreeContainer from "@/components/FamilyTreeContainer.vue";
 
 // Import Bulma CSS
-import 'bulma/css/bulma.css'
+import "bulma/css/bulma.css";
 
 @Options({
   components: {
