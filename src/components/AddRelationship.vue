@@ -1,44 +1,49 @@
 <template>
   <div>
     <h1>Add Relationship</h1>
-    <div class="select">
-      <select v-model="subjectId">
-        <option
-          v-for="(person, index) in persons"
-          :key="index"
-          :value="person.person_uuid"
-        >
-          {{ person.names }}
-        </option>
-      </select>
+    <div class="columns">
+      <div class="column">
+        <div class="select">
+          <select v-model="subjectId">
+            <option
+              v-for="(person, index) in persons"
+              :key="index"
+              :value="person.person_uuid"
+            >
+              {{ person.names }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="column">
+        <div class="select">
+          <select v-model="relationshipType">
+            <option
+              v-for="(relationshipType, index) in relationshipTypes"
+              :key="index"
+              :value="relationshipType"
+            >
+              {{ relationshipType }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="column">
+        <div class="select">
+          <select v-model="objectId">
+            <option
+              v-for="(person, index) in persons"
+              :key="index"
+              :value="person.person_uuid"
+            >
+              {{ person.names }}
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
-    <br />
-    <div class="select">
-      <select v-model="relationshipType">
-        <option
-          v-for="(relationshipType, index) in relationshipTypes"
-          :key="index"
-          :value="relationshipType"
-        >
-          {{ relationshipType }}
-        </option>
-      </select>
-    </div>
-    <br />
-    <div class="select">
-      <select v-model="objectId">
-        <option
-          v-for="(person, index) in persons"
-          :key="index"
-          :value="person.person_uuid"
-        >
-          {{ person.names }}
-        </option>
-      </select>
-    </div>
-    <br />
     <button @click="addRelationship" class="button">
-      Add <Relationship></Relationship>
+      Add
     </button>
   </div>
 </template>

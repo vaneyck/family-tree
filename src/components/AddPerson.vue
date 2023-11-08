@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Add Person</h1>
-
     <div class="field">
       <label class="label">Name</label>
       <div class="control">
@@ -9,27 +8,33 @@
       </div>
     </div>
 
-    <div class="field">
-      <label class="label">Gender</label>
-      <div class="control select">
-        <select v-model="gender">
-          <option>male</option>
-          <option>female</option>
-        </select>
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Gender</label>
+          <div class="control select">
+            <select v-model="gender">
+              <option>male</option>
+              <option>female</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="field">
-      <label class="label">Year of Birth</label>
-      <div class="control">
-        <input class="input" type="number" v-model="yearOfBirth" />
+      <div class="column">
+        <div class="field">
+          <label class="label">Year of Birth</label>
+          <div class="control">
+            <input class="input" type="number" v-model="yearOfBirth" />
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="field">
-      <label class="label">Year of Death</label>
-      <div class="control">
-        <input class="input" type="number" v-model="yearOfDeath" />
+      <div class="column">
+        <div class="field">
+          <label class="label">Year of Death</label>
+          <div class="control">
+            <input class="input" type="number" v-model="yearOfDeath" />
+          </div>
+        </div>
       </div>
     </div>
 

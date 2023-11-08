@@ -5,18 +5,41 @@
     <hr />
     <AddRelationship />
     <hr />
-    <ol>
-      <li v-for="(person, index) in persons" :key="index">
-        {{ person.person_uuid }} // {{ person.names }}
-      </li>
-    </ol>
+    <table class="table">
+      <thead>
+      <tr>
+        <td>Name</td>
+        <td>Gender</td>
+        <td>Birth</td>
+        <td>Death</td>
+        <td>Action</td>
+      </tr>
+      </thead>
+      <tr v-for="(person, index) in persons" :key="index">
+        <td>{{ person.names}}</td>
+        <td>{{ person.gender }}</td>
+        <td>{{ person.yearOfBirth }}</td>
+        <td>{{ person.yearOfDeath }}</td>
+        <td>Action</td>
+      </tr>
+    </table>
     <hr />
-    <ol>
-      <li v-for="(relation, index2) in relationships" :key="index2">
-        {{ JSON.stringify(relation) }}
-        <!--        SUBJ : {{ relation.subject_uuid }} = {{ relation.relationship_type }} = OBJ : {{ relation.object_uuid }}-->
-      </li>
-    </ol>
+    <table class="table">
+      <thead>
+        <tr>
+          <td>Subject</td>
+          <td>Relation</td>
+          <td>Object</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tr v-for="(relation, index2) in relationships" :key="index2">
+        <td>{{ getPersonName(relation.subject_uuid) }}</td>
+        <td>{{ relation.relationship_type }}</td>
+        <td>{{ getPersonName(relation.object_uuid) }}</td>
+        <td>Action</td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -25,6 +48,7 @@ import { Options, Vue } from "vue-class-component";
 import store from "@/store";
 import AddPerson from "@/components/AddPerson.vue";
 import AddRelationship from "@/components/AddRelationship.vue";
+import {Person} from "@/types/Person";
 
 @Options({
   components: { AddRelationship, AddPerson },
@@ -42,6 +66,9 @@ import AddRelationship from "@/components/AddRelationship.vue";
     },
   },
   methods: {
+    getPersonName: function (userId: string) {
+      return this.persons.find((p : Person) => p.person_uuid === userId).names??'';
+    },
     addJsonData: function () {
       store.dispatch(
         "processJson",
