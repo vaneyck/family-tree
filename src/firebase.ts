@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import * as firebaseui from "firebaseui";
 import { getAuth } from "firebase/auth";
 import { initializeFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -32,3 +33,7 @@ const ui = new firebaseui.auth.AuthUI(auth);
 
 export const signInUi = ui;
 export const firebaseAuth = auth;
+
+const storage = getStorage(app);
+
+export const firebaseStorage = storage;

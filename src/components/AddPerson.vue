@@ -41,11 +41,11 @@
     <div class="field">
       <label class="label">Link To Image</label>
       <div class="control">
-        <input class="input" type="text" v-model="headShotImage" />
+        <input class="input" type="file" @change="fileSelected" ref="myFile" />
       </div>
     </div>
 
-    <button @click="addPerson" class="button">Add Person</button>
+    <button :disabled="uploadingImage" @click="addPerson" class="button">Add Person</button>
   </div>
 </template>
 
@@ -54,6 +54,8 @@ import { Options, Vue } from "vue-class-component";
 import store from "@/store";
 import { Person } from "@/types/Person";
 import { v4 as uuidv4 } from "uuid";
+import { getApp } from "firebase/app";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 @Options({
   props: {
@@ -62,6 +64,7 @@ import { v4 as uuidv4 } from "uuid";
   },
   data() {
     return {
+      uploadingImage: false,
       personName: "",
       gender: "male",
       yearOfBirth: null,
@@ -70,6 +73,24 @@ import { v4 as uuidv4 } from "uuid";
     };
   },
   methods: {
+    fileSelected: function (filePath: string) {
+      console.log(filePath);
+      const file = this.$refs.myFile.files[0] as File;
+
+      const firebaseApp = getApp();
+      const storage = getStorage(firebaseApp, "gs://family-tree-3772b.appspot.com");
+
+      const storageRef = ref(storage, 'headshots/' + file.name);
+      this.uploadingImage = true;
+      uploadBytes(storageRef, file).then((snapshot) => {
+        this.uploadingImage = false;
+        console.log('Uploaded a blob or file!');
+
+        getDownloadURL(storageRef).then((url : string) => {
+          this.headShotImage = url;
+        });
+      });
+    },
     addPerson: function () {
       store.dispatch("addPerson", {
         person_uuid: this.editing ? this.editingUuid : uuidv4(),
