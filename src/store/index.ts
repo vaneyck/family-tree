@@ -6,6 +6,7 @@ export default createStore({
   state: {
     persons: [] as Person[],
     relationships: [] as Relationship[],
+    treeData: {},
   },
   getters: {
     getPersons(state) {
@@ -14,24 +15,32 @@ export default createStore({
     getRelationships(state) {
       return state.relationships;
     },
+    getTreeData(state) {
+      return state.treeData;
+    },
   },
   mutations: {
     addPerson(state, personToAdd: Person) {
       const foundPerson = state.persons.find((p) => {
         return p.person_uuid === personToAdd.person_uuid;
       });
-      if (!foundPerson) {
+      if (!foundPerson && personToAdd) {
         state.persons.push(personToAdd);
       }
     },
     addRelationship(state, relationshipToAdd: Relationship) {
+      // TODO make this better
+      if (state.relationships.length == 0) {
+        state.relationships.push(relationshipToAdd);
+        return;
+      }
       const foundRelationship = state.relationships.find((relationship) => {
         return (
-          relationship.subject_uuid === relationship.subject_uuid &&
-          relationship.object_uuid === relationship.object_uuid
+          relationship.subject_uuid === relationshipToAdd.subject_uuid &&
+          relationship.object_uuid === relationshipToAdd.object_uuid
         );
       });
-      if (!foundRelationship) {
+      if (!foundRelationship && relationshipToAdd) {
         state.relationships.push(relationshipToAdd);
       }
     },

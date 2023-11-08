@@ -7,17 +7,21 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "prettier:check": "yarn prettier . --check",
+    "eslint:fix": "npx eslint . --fix",
     "prettier:write": "yarn prettier . --write",
     "prepare": "husky install"
   },
   "dependencies": {
     "bulma": "^0.9.4",
     "core-js": "^3.8.3",
+    "d3": "^7.8.5",
+    "uuid": "^9.0.1",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",
