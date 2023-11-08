@@ -1,17 +1,45 @@
 <template>
   <div>
     <h1>Add Person</h1>
-    <input class="input" type="text" v-model="personName" />
-    <br />
-    <br />
-    <div class="select">
-      <select v-model="gender">
-        <option>male</option>
-        <option>female</option>
-      </select>
+
+    <div class="field">
+      <label class="label">Name</label>
+      <div class="control">
+        <input class="input" type="text" v-model="personName" />
+      </div>
     </div>
-    <br />
-    <br />
+
+    <div class="field">
+      <label class="label">Gender</label>
+      <div class="control select">
+        <select v-model="gender">
+          <option>male</option>
+          <option>female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Year of Birth</label>
+      <div class="control">
+        <input class="input" type="number" v-model="yearOfBirth" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Year of Death</label>
+      <div class="control">
+        <input class="input" type="number" v-model="yearOfDeath" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Link To Image</label>
+      <div class="control">
+        <input class="input" type="text" v-model="headShotImage" />
+      </div>
+    </div>
+
     <button @click="addPerson" class="button">Add Person</button>
   </div>
 </template>
@@ -27,6 +55,9 @@ import { v4 as uuidv4 } from "uuid";
     return {
       personName: "",
       gender: "male",
+      yearOfBirth: null,
+      yearOfDeath: null,
+      headShotImage: null,
     };
   },
   methods: {
@@ -35,6 +66,9 @@ import { v4 as uuidv4 } from "uuid";
         person_uuid: uuidv4(),
         names: this.personName,
         gender: this.gender,
+        yearOfBirth: this.yearOfBirth,
+        yearOfDeath: this.yearOfDeath,
+        headShotImage: this.headShotImage,
       } as Person);
       this.personName = "";
     },

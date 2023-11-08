@@ -25,6 +25,8 @@ import FamilyTree from "@balkangraph/familytree.js";
       new FamilyTree("#tree", {
         nodeBinding: {
           field_0: "name",
+          field_1: "yearsRange",
+          img_0: "headShotImage",
         },
         nodes: this.treeData,
       });

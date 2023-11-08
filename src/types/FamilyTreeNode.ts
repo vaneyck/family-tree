@@ -5,4 +5,6 @@ export type FamilyTreeNode = {
   fid?: string;
   mid?: string;
   gender: string; // TODO male or female
+  yearsRange?: string;
+  headShotImage?: string;
 };
