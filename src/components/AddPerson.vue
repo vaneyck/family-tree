@@ -39,6 +39,7 @@
     </div>
 
     <div class="field">
+      <img width="100" :src="headShotImage"/>
       <label class="label">Link To Image</label>
       <div class="control">
         <input class="input" type="file" name="myImage" accept="image/*" @change="fileSelected" ref="myFile" />
