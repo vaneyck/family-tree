@@ -6,6 +6,7 @@
         <table class="table">
           <thead>
             <tr>
+              <td>Image</td>
               <td>Name</td>
               <td>Gender</td>
               <td>Birth</td>
@@ -14,6 +15,7 @@
             </tr>
           </thead>
           <tr v-for="(person, index) in persons" :key="index">
+            <td><img width="100" :src="person.headShotImage"  alt=""/></td>
             <td>{{ person.names }}</td>
             <td>{{ person.gender }}</td>
             <td>{{ person.yearOfBirth }}</td>

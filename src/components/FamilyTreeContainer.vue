@@ -1,7 +1,8 @@
 <template>
   <div>
     <router-link to="/manage-persons">Manage Persons</router-link>
-    || <router-link to="/manage-relations">Manage Relations</router-link>
+    ||
+    <router-link to="/manage-relations">Manage Relations</router-link>
     <div class="columns">
       <div class="column">
         <Tree></Tree>
@@ -47,6 +48,19 @@ import { Relationship } from "@/types/Relationship";
             let map = doc.data() as Person;
             map.person_uuid = doc.id;
             persons.push(map);
+          });
+          persons.sort((a, b) => {
+            // Convert names to lowercase for case-insensitive sorting
+            const nameA = a.names.toLowerCase();
+            const nameB = b.names.toLowerCase();
+
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0;
           });
           store.state.persons = persons;
         });
