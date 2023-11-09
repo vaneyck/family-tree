@@ -1,5 +1,7 @@
 <template>
   <div>
+    <router-link to="/manage-persons">Manage Persons</router-link>
+    || <router-link to="/manage-relations">Manage Relations</router-link>
     <div class="columns">
       <div class="column">
         <Tree></Tree>

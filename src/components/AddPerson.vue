@@ -39,14 +39,23 @@
     </div>
 
     <div class="field">
-      <img width="100" :src="headShotImage"/>
+      <img width="100" :src="headShotImage" />
       <label class="label">Link To Image</label>
       <div class="control">
-        <input class="input" type="file" name="myImage" accept="image/*" @change="fileSelected" ref="myFile" />
+        <input
+          class="input"
+          type="file"
+          name="myImage"
+          accept="image/*"
+          @change="fileSelected"
+          ref="myFile"
+        />
       </div>
     </div>
 
-    <button :disabled="uploadingImage" @click="addPerson" class="button">Add Person</button>
+    <button :disabled="uploadingImage" @click="addPerson" class="button">
+      Add Person
+    </button>
   </div>
 </template>
 
@@ -62,6 +71,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
   props: {
     editing: Boolean,
     editingUuid: String,
+    personToEdit: Object
   },
   data() {
     return {
@@ -72,6 +82,19 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
       yearOfDeath: null,
       headShotImage: null,
     };
+  },
+  watch:{
+    editingUuid: function (newValue) {
+      console.log(newValue);
+      if (this.editing) {
+        console.log("Person To Edit", this.personToEdit);
+        this.personName = this.personToEdit.names;
+        this.gender = this.personToEdit.gender??null;
+        this.yearOfBirth = this.personToEdit.yearOfBirth??null;
+        this.yearOfDeath = this.personToEdit.yearOfDeath??null;
+        this.headShotImage = this.personToEdit.headShotImage??null;
+      }
+    }
   },
   methods: {
     fileSelected: function (filePath: string) {

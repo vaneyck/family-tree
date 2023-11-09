@@ -2,10 +2,14 @@ import FamilyTreeContainer from "@/components/FamilyTreeContainer.vue";
 import SignIn from "@/components/SignIn.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { firebaseAuth } from "@/firebase";
+import ManagePersons from "@/components/ManagePersons.vue";
+import ManageRelations from "@/components/ManageRelations.vue";
 
 const routes = [
   { name: "signin", path: "/", component: SignIn },
   { name: "dashboard", path: "/dashboard", component: FamilyTreeContainer },
+  { name: "manage-persons", path: "/manage-persons", component: ManagePersons },
+  { name: "manage-relations", path: "/manage-relations", component: ManageRelations },
 ];
 
 const router = createRouter({
