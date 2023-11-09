@@ -30,6 +30,8 @@ import FamilyTree from "@balkangraph/familytree.js";
         // enableTouch: true,
         zoom: {speed: 130, smooth: 50},
         orientation: FamilyTree.orientation.left,
+        layout: FamilyTree.layout.mixed,
+        orderBy: "yearOfBirth",
         toolbar: {
           fullScreen: true,
           zoom: true,

@@ -21,6 +21,8 @@ const prepareTreeData = function (
       id: p.person_uuid,
       pids: [],
       gender: p.gender,
+      yearOfBirth: p.yearOfBirth,
+      yearOfDeath: p.yearOfDeath,
       yearsRange: `${p.yearOfBirth ?? ""}-${p.yearOfDeath ?? ""}`,
       headShotImage: p.headShotImage,
     } as FamilyTreeNode;
