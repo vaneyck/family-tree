@@ -48,6 +48,9 @@
     <button @click="addRelationship" class="button">
       Add
     </button>
+    <div v-if="editing">
+      <button @click="deleteRelation">{{ deleteMessage }}</button>
+    </div>
   </div>
 </template>
 
@@ -56,6 +59,9 @@ import { Options, Vue } from "vue-class-component";
 import store from "@/store";
 import { Relationship, RelationshipType } from "@/types/Relationship";
 import { v4 as uuidv4 } from "uuid";
+import {firebaseAuth} from "@/firebase";
+import {collection, doc, getFirestore, deleteDoc} from "firebase/firestore";
+import { getRelationsPath} from "@/utils/helpers";
 
 @Options({
   props: {
@@ -65,6 +71,7 @@ import { v4 as uuidv4 } from "uuid";
   },
   data() {
     return {
+      areYouSure: false,
       subjectId: null,
       objectId: null,
       relationshipType: null,
@@ -74,6 +81,7 @@ import { v4 as uuidv4 } from "uuid";
     editingUuid: function (newValue) {
       console.log("Managing = ", newValue);
       if (this.editing) {
+        this.areYouSure = false;
         this.subjectId = this.relationShipToEdit.subject_uuid??null;
         this.objectId = this.relationShipToEdit.object_uuid??null;
         this.relationshipType = this.relationShipToEdit.relationship_type??null;
@@ -87,8 +95,38 @@ import { v4 as uuidv4 } from "uuid";
     relationshipTypes: function () {
       return Object.values(RelationshipType);
     },
+    deleteMessage: function () {
+      if (this.areYouSure) {
+        return "Click again to Delete"
+      } else {
+        return "Are you sure you want to delete. Click for Yes";
+      }
+    }
   },
   methods: {
+    deleteRelation: function () {
+      if (this.areYouSure) {
+        this.doDeleteRelationWork();
+        this.areYouSure = false;
+      } else {
+        this.areYouSure = true;
+      }
+    },
+    doDeleteRelationWork: function () {
+      try {
+        const currentUser = firebaseAuth.currentUser;
+        if (currentUser) {
+          const relationRef = collection(
+              getFirestore(),
+              getRelationsPath(currentUser.uid),
+          );
+          deleteDoc(doc(relationRef, this.editingUuid));
+        }
+      } catch (e) {
+        console.error("Error deleting document: ", e);
+        alert("Could not deleting document");
+      }
+    },
     addRelationship: function () {
       const rel = {
         relationship_uuid: this.editing ? this.editingUuid : uuidv4(),
