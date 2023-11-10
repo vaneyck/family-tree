@@ -24,11 +24,11 @@ import FamilyTree from "@balkangraph/familytree.js";
     renderTree: function () {
       new FamilyTree("#tree", {
         menu:{
+          png: { text: "Export PNG" },
           svg: { text: "Export SVG" },
           csv: { text: "Export CSV" },
         },
         // enableTouch: true,
-        zoom: {speed: 130, smooth: 50},
         orientation: FamilyTree.orientation.left,
         layout: FamilyTree.layout.mixed,
         orderBy: "yearOfBirth",
